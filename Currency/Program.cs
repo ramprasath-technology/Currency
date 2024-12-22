@@ -1,4 +1,6 @@
 using Asp.Versioning;
+using CurrencyConverter.Service;
+using NetworkCalls.HTTP;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,6 +16,11 @@ builder.Services.AddApiVersioning(options =>
     options.ReportApiVersions = true;
     options.AssumeDefaultVersionWhenUnspecified = true;
 });
+
+builder.Services.AddHttpClient();
+builder.Services.AddLogging();
+builder.Services.AddScoped<ICurrencyConverterService, CurrencyConverterService>();
+builder.Services.AddScoped<IGetCalls, GetCalls>();
 
 var app = builder.Build();
 
