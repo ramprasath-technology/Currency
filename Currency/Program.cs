@@ -19,7 +19,7 @@ builder.Services.AddApiVersioning(options =>
 
 builder.Services.AddHttpClient();
 builder.Services.AddLogging();
-builder.Services.AddScoped<ICurrencyConverterService, CurrencyConverterService>();
+builder.Services.AddScoped<ICurrencyConverterFactory, CurrencyConverterFactory>();
 builder.Services.AddScoped<IGetCalls, GetCalls>();
 
 var app = builder.Build();

@@ -11,19 +11,20 @@ namespace Currency.Controllers.CurrencyConversion
     [ApiController]
     public class CurrencyConversionV1Controller : ControllerBase
     {
-        private readonly ICurrencyConverterService _currencyConversionService;
+        private readonly ICurrencyConverterFactory _currencyConverterFactory;
 
-        public CurrencyConversionV1Controller(ICurrencyConverterService currencyConverterService)
+        public CurrencyConversionV1Controller(ICurrencyConverterFactory currencyConverterFactory)
         {
-            _currencyConversionService = currencyConverterService;
+            _currencyConverterFactory = currencyConverterFactory;
         }
 
-        [HttpGet("conversionrates/{baseCurrency}")]
-        public async Task<ActionResult> GetConversionRates(string baseCurrency)
+        [HttpGet("conversionrates")]
+        public async Task<ActionResult> GetConversionRates()
         {
             try
             {
-                var exchangeRates = await _currencyConversionService.GetExchangeRate(baseCurrency);
+                var currencyConvesionService = _currencyConverterFactory.GetCurrencyConverterService();
+                var exchangeRates = await currencyConvesionService.GetExchangeRate();
                 return Ok(exchangeRates);
             }
             catch (Exception ex)
